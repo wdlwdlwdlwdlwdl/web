@@ -40,39 +40,15 @@ public class HLACommand {
         Process process = Runtime.getRuntime().exec(command);
         process.waitFor();
 
-//        try {
-//            Process process = Runtime.getRuntime().exec(command);
-//            process.waitFor();
-//
-//            // 输出命令执行结果
-//            logCommandOutput(process.getInputStream(), "Command Output");
-//
-//            // 检查是否有错误输出
-//            InputStream errorStream = process.getErrorStream();
-//            if (errorStream.available() > 0) {
-//                logCommandOutput(errorStream, "Command Error");
-//            }
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
 
     }
 
-//    public void logCommandOutput(InputStream inputStream, String logPrefix) throws IOException {
-//        // 输出命令执行结果
-//        BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
-//        String line;
-//        System.out.println(logPrefix + ":");
-//        while ((line = reader.readLine()) != null) {
-//            System.out.println(line);
-//        }
-//    }
 
 
     public void executeLinuxCommands() throws IOException, InterruptedException {
         // 执行 Linux 下的命令
         // 例如：source activate ycp
-        Process process1 = Runtime.getRuntime().exec("source activate ycp && python /data/ycp/fx/性能测试.py");
+        Process process1 = Runtime.getRuntime().exec("python /data/ycp/fx/性能测试_hla.py");
         process1.waitFor();
     }
 }
