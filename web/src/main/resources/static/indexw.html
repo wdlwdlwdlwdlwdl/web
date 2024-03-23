@@ -1,0 +1,201 @@
+<!doctype html> 
+<html lang="en" class="no-js"> 
+<head> 
+<meta charset="UTF-8" /> 
+<title>Particleground demo</title> 
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link rel="stylesheet" href="menu.css" />
+
+<script type='text/javascript' src='js/jquery-1.11.1.min.js'></script>
+<script type='text/javascript' src='js/jquery.particleground.min.js'></script>
+<script type='text/javascript' src='js/demo.js'></script>
+
+
+
+
+<!--下面的代码加上去就没有背景了-->
+	<link href="newserver.css" rel="stylesheet" type="text/css">
+	<link href="newmain.css" rel="stylesheet" type="text/css">
+
+<!--	下面代码不能用-->
+<!--	<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>-->
+
+
+
+</head> 
+
+<body>
+
+
+<div id="particles">
+
+	<div  class="body_content">
+		<div id="header">
+			<h1 class="red">Model Test</h1>
+		</div>
+
+		<br><br/><br><br/><br><br/><br><br/>
+
+		<div id="canshu" style="width: 900px;">
+			<!--      下边的action属性指定表单数据提交的目标地址，由后端的注解方法来处理-->
+			<form action="/submitForm" enctype='multipart/form-data' method='POST' >
+
+				<div class="col">
+
+					<h3><span class="red">Input File</span></h3>
+					<br><br/>
+					<br><br/>
+					<b>
+						<label>Microsoft Excel Format (.csv):</label>
+					</b>
+					<br><br/>
+
+					<input class="file" type="file" name="file" id="file" accept=".csv" >
+					<br><br/>
+					<button type="button" class="myButton" id="upload">Upload(csv)</button>
+
+					<div class="info1">
+						<!--          示例文档链接-->
+						<b>
+
+							<!--            <a href="/static/examples/independent_set.csv">Example File</a>-->
+							<a href="/static/examples">Example File（上传的示例文件）</a>
+						</b>
+						<br><br/>
+					</div>
+
+				</div>
+
+
+				<div class="col">
+					<h3><span class="red">Data Type</span></h3>
+					<br><br/><br><br/>
+					<br><br/>
+					<b><label>&ensp;&ensp;&ensp;请选择 :</label></b>
+					<select class="form-control" type = "text"  id="Evo_num" name="Evo_num"  required="" value='A'>
+						<!--<option selected="selected">--请选择进化次数--</option>-->
+
+						<option value='A'>HLA</option>
+						<option value='B'>TCR</option>
+						<option value='AB'>HLA-TCR</option>
+
+					</select>
+
+
+					<br><br/><br><br/>
+
+
+					<div>
+						<b><label style="display: inline-block; width: 100px;">&ensp;&ensp;peptide:</label></b>
+						<input type="text" id="inputA" name="inputA" >
+						<br><br/>
+					</div>
+
+					<div>
+						<b><label style="display: inline-block; width: 100px;">&ensp;&ensp;sequence:</label></b>
+						<input type="text" id="inputB" name="inputB" placeholder= '请输入:HLA/TCR/HLA-TCR' >
+					</div>
+
+					<br><br/>
+
+
+
+
+				</div>
+
+
+				<div class="col">
+
+					<h3><span class="red">Job Submission</span></h3>
+					<br><br/>
+					<br><br/>
+
+					<br><br/>
+					<b><label>&ensp;&ensp;Email:</label></b>
+					<!--          先不写required,先进行测试-->
+					<!--        <input type = "text"  id="Email_address" name="Email_address"  size="25" placeholder= 'Please enter your email address' required>-->
+					<input type = "text"  id="Email_address" name="Email_address"  size="25" placeholder= 'Please enter your email address' >
+					<br><br/>
+
+
+					<label>&ensp;&ensp;
+						<input type="checkbox" name="checkbox"> 是否需要热图
+					</label>
+
+
+				</div>
+
+
+				<div align="center" class="col1">
+
+					<input class="file" type="submit" value=" Run（请耐心等待几分钟） ">
+
+				</div>
+			</form>
+		</div>
+
+	</div>
+
+</div>
+
+
+<!--<div id="particles">-->
+
+
+
+<!--</div>-->
+
+
+
+<!--<script src="index.js"></script>-->
+<script>
+	$("#upload").on("click", function () {
+		var fileObj = document.getElementById("file").files[0];//这边的file是输入框上传的文件数据
+		var form = new FormData();
+		form.append("file", fileObj);
+
+		// 使用Ajax发送文件到服务器
+		$.ajax({
+			type: "POST",
+			url: "/upload",  // 指定服务器端点（文件上传）
+			data: form,
+			processData: false,
+			contentType: false,
+			success: function (data) {
+				// 处理成功，可以显示消息或执行其他操作
+				alert(data);
+				window.location.href = window.location.href;
+			},
+			error: function () {
+				// 处理错误，如果有的话
+				alert("上传失败，请检查服务器日志获取详细信息。");
+			}
+		});
+	});
+</script>
+<script>
+	// 在表单提交成功后，显示邮件发送结果
+	$("form").submit(function (event) {
+		event.preventDefault(); // 阻止表单的默认提交行为
+		var formData = $(this).serialize(); // 将表单数据序列化为字符串
+
+		$.ajax({
+			type: "POST",
+			url: "/submitForm", // 提交到后端处理邮件发送的接口
+			data: formData,
+			success: function (data) {
+				// 处理成功，显示邮件发送结果
+				alert(data);
+			},
+			error: function () {
+				// 处理错误
+				alert("邮件发送失败，请检查日志获取详细信息。");
+			}
+		});
+	});
+</script>
+
+
+</body> 
+</html> 

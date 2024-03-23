@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Email Sending</title>
+  <link rel="stylesheet" href="background.css">
+  <link href="https://cdn.bootcss.com/twitter-bootstrap/3.4.0/css/bootstrap.css" rel="stylesheet">
+</head>
+
+<body>
+
+
+<div class='white'>
+  <div class='squares'>
+    <div class='square'></div>
+    <div class='square'></div>
+    <div class='square'></div>
+    <div class='square'></div>
+    <div class='square'></div>
+    <div class='square'></div>
+    <div class='square'></div>
+    <div class='square'></div>
+    <div class='square'></div>
+    <div class='square'></div>
+  </div>
+
+
+  <div class="content">
+
+    <div class="container">
+      <div class="panel panel-success" style="margin-top: 10px;">
+        <div class="panel-heading">
+          <h3>运行结果将以下面两种方式发送:</h3>
+        </div>
+        <div class="panel-body">
+          <form id="email-form" method="post">
+            <div class="form-group">
+              <label for="to">收件人:</label>
+              <input type="text" name="to" id="to" class="form-control" />
+            </div>
+            <button type="button" id="sendEmail" class="btn btn-success">发送邮件</button>
+
+            <!-- 空白间隔 -->
+            <div style="margin-top: 10px;"></div>
+
+            <!-- 添加进度条元素 -->
+            <div class="progress" style="margin-top: 20px; display: none;">
+              <div id="progress-bar" class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;">
+                <span id="progress-text">0%</span>
+              </div>
+            </div>
+
+            <!-- 下载文件按钮 -->
+            <div class="form-group">
+              <a href="/download/file" class="btn btn-primary" role="button" id="downloadFile">直接下载文件</a>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+
+</div>
+<div class='grey'></div>
+
+
+
+
+<script type="text/javascript" src="https://cdn.bootcss.com/canvas-nest.js/1.0.1/canvas-nest.min.js"></script>
+<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<script type="text/javascript">
+  $("#to").on("keypress", function (event) {
+    // 检测是否按下的是回车键（Enter键）
+    if (event.which === 13) {
+      // 阻止默认行为，以防止回车键触发表单的提交
+      event.preventDefault();
+
+      // 执行发送邮件的逻辑
+      sendEmail();
+    }
+  });
+
+  $("#sendEmail").on("click", function () {
+    // 执行发送邮件的逻辑
+    sendEmail();
+  });
+
+  $("#downloadFile").on("click", function () {
+    // 显示进度条
+    $("#progress-bar").parent().fadeIn();
+
+    // 模拟下载过程，实际中应该根据后端返回的进度消息来更新
+    simulateDownload();
+  });
+
+  function simulateDownload() {
+    var progress = 0;
+    var interval = setInterval(function () {
+      progress += 10;
+      if (progress <= 100) {
+        updateProgressBar(progress);
+      } else {
+        clearInterval(interval);
+      }
+    }, 500);
+  }
+
+  function updateProgressBar(progress) {
+    var progressBar = $("#progress-bar");
+    var progressText = $("#progress-text");
+
+    // 更新进度条
+    progressBar.css("width", progress + "%").attr("aria-valuenow", progress);
+    progressText.text(progress + "%");
+
+    // 如果进度达到100%，隐藏进度条
+    if (progress === 100) {
+      setTimeout(function () {
+        progressBar.parent().fadeOut();
+      }, 1000);
+    }
+  }
+
+  function sendEmail() {
+    var to = $("#to").val();
+
+    // 如果需要，进行验证
+
+    // 显示进度条
+    $("#progress-bar").parent().fadeIn();
+
+    // 使用Ajax将 'to' 值发送到服务器
+    $.ajax({
+      type: "POST",
+      url: "/sendWithEnclosure",
+      data: { to: to },
+      xhr: function () {
+        var xhr = new window.XMLHttpRequest();
+        // 处理整个请求的进度更新
+        xhr.addEventListener("progress", function (e) {
+          if (e.lengthComputable) {
+            var percent = Math.round((e.loaded / e.total) * 100);
+            updateProgressBar(percent);
+          }
+        }, false);
+
+        // 模拟邮件发送的过程，实际中应该根据后端返回的进度消息来更新
+        simulateEmailSending(xhr);
+
+        return xhr;
+      },
+      success: function (data) {
+        // 处理成功，可以显示消息或执行其他操作
+        alert("发送邮件成功");
+      },
+      error: function () {
+        // 处理错误，如果有的话
+        alert("发送邮件失败。请检查服务器日志获取详细信息。");
+      },
+      complete: function () {
+        // 隐藏进度条
+        $("#progress-bar").parent().fadeOut();
+      }
+    });
+  }
+
+  // 新增的函数，用于模拟邮件发送的过程
+  function simulateEmailSending(xhr) {
+    var progress = 0;
+    var interval = setInterval(function () {
+      progress += 10;
+      if (progress <= 100) {
+        updateProgressBar(progress);
+        xhr.dispatchEvent(new ProgressEvent("progress", { lengthComputable: true, loaded: progress * 0.01, total: 1 }));
+      } else {
+        clearInterval(interval);
+        // 邮件发送完成后，可以在此添加额外的逻辑
+        xhr.dispatchEvent(new ProgressEvent("load", { lengthComputable: true, loaded: 1, total: 1 }));
+      }
+    }, 500);
+  }
+</script>
+
+</body>
+
+</html>

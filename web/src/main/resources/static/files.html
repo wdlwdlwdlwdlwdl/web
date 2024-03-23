@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>File upload and download</title>
+    <link rel="stylesheet" href="background.css">
+    <link href="https://cdn.bootcss.com/twitter-bootstrap/3.4.0/css/bootstrap.css" rel="stylesheet">
+</head>
+
+<body>
+
+<div class='white'>
+    <div class='squares'>
+        <div class='square'></div>
+        <div class='square'></div>
+        <div class='square'></div>
+        <div class='square'></div>
+        <div class='square'></div>
+        <div class='square'></div>
+        <div class='square'></div>
+        <div class='square'></div>
+        <div class='square'></div>
+        <div class='square'></div>
+    </div>
+
+
+    <div class="content">
+
+
+
+
+        <div class="container">
+            <div class="panel panel-success" style="margin-top: 10px;">
+                <div class="panel-heading">
+                    <p>File upload:</p>
+                </div>
+
+                <div class="panel-body">
+                    <form id="upload-form" enctype="multipart/form-data" method="post">
+                        <div class="form-group">
+                            <input type="file" name="file" id="file" class="form-control" accept=".csv" required />
+                            <br>
+                            <button type="button" id="upload" class="btn btn-success">Upload(csv)</button>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="panel-heading">
+                    <p>手动输入:</p>
+                </div>
+
+                <!-- 修改这里 -->
+                <div class="panel-body">
+                    <form id="manual-input-form" method="post">
+                        <div class="form-group">
+                            <label for="textInput">输入序列(peptide):</label>
+                            <input type="text" name="textInput" id="textInput" class="form-control" />
+                            <br>
+                            <label for="textInput2">输入序列(HLA_sequence):</label>
+                            <input type="text" name="textInput2" id="textInput2" class="form-control" />
+                            <br>
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" name="heatmapCheckbox"> 是否需要热力图
+                                </label>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group" style="display: flex; flex-direction: column; align-items: center;">
+            <button type="button" id="submit" class="btn btn-success" style="margin-bottom: 10px;">submit</button>
+        </div>
+
+
+    </div>
+
+
+
+
+</div>
+<div class='grey'></div>
+
+
+
+
+
+
+<script type="text/javascript" src="https://cdn.bootcss.com/canvas-nest.js/1.0.1/canvas-nest.min.js"></script>
+<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+<script>
+    $("#upload").on("click", function () {
+        var fileObj = document.getElementById("file").files[0];//这边的file是输入框上传的文件数据
+        var form = new FormData();
+        form.append("file", fileObj);
+
+        // 使用Ajax发送文件到服务器
+        $.ajax({
+            type: "POST",
+            url: "/upload",  // 指定服务器端点（文件上传）
+            data: form,
+            processData: false,
+            contentType: false,
+            success: function (data) {
+                // 处理成功，可以显示消息或执行其他操作
+                alert(data);
+                window.location.href = window.location.href;
+            },
+            error: function () {
+                // 处理错误，如果有的话
+                alert("上传失败，请检查服务器日志获取详细信息。");
+            }
+        });
+    });
+
+    $("#submit").on("click", function () {
+        var userInput1 = $("#textInput").val();
+        var userInput2 = $("#textInput2").val();
+
+        // 如果任一输入序列为空，则直接跳转到sendEmail.html页面
+        if (!userInput1.trim() || !userInput2.trim()) {
+            window.location.href = "/sendEmail.html";
+            return;
+        }
+
+        // 生成CSV内容
+        var csvContent = ",peptide,HLA_sequence\n0 ," + userInput1 + "," + userInput2;
+
+        var blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+
+        // 执行上传逻辑，类似文件上传的方式
+
+        // 创建FormData对象，将Blob对象添加到其中
+        var formData = new FormData();
+        formData.append("csvFile", blob, "independent_set.csv");
+
+        // 使用Ajax发送FormData到服务器
+        $.ajax({
+            type: "POST",
+            url: "/uploadCSV",  // 指定服务器端点（手动输入文件上传）
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function (data) {
+                // 处理成功，可以显示消息或执行其他操作
+                alert(data);
+                window.location.href = "/sendEmail.html"; // 跳转
+            },
+            error: function () {
+                // 处理错误，如果有的话
+                alert("上传失败，请检查服务器日志获取详细信息。");
+            }
+        });
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Model Test</title>
+
+<!--    <link rel="stylesheet" href="menu.css" />-->
+
+
+    <link href="newserver2.css" rel="stylesheet" type="text/css">
+    <!--    <link href="server.css" rel="stylesheet" type="text/css">-->
+
+    <link href="newmain2.css" rel="stylesheet" type="text/css">
+    <!--  <link href="main.css" rel="stylesheet" type="text/css">-->
+
+    <link rel="stylesheet" href="background.css">
+    <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="menu.css">
+
+
+    <!--    为了让canvas元素与动态背景同时呈现-->
+    <style>
+        /* 新增的样式 */
+        #canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: -1;
+        }
+    </style>
+
+
+</head>
+
+
+
+<body>
+
+<!--原来的背景-->
+<canvas id="canvas"></canvas>
+
+<!--动态背景-->
+<div class='squares'>
+    <div class='square'></div>
+    <div class='square'></div>
+    <div class='square'></div>
+    <div class='square'></div>
+    <div class='square'></div>
+    <div class='square'></div>
+    <div class='square'></div>
+    <div class='square'></div>
+    <div class='square'></div>
+    <div class='square'></div>
+</div>
+
+
+
+<div class="body_content">
+
+
+
+    <div id="header">
+        <h1 class="red">Model Test</h1>
+    </div>
+
+
+
+
+    <br><br/><br><br/>
+
+    <div id="nav-1">
+
+        <ul class="nav">
+            <li class="slide1"></li>
+            <li class="slide2"></li>
+            <li><a class="active" href="HLA/HLA.html">HLA</a></li>
+            <li><a href="TCR/TCR.html">TCR</a></li>
+            <li><a href="HLA-TCR/HLA-TCR.html">HLA-TCR</a></li>
+            <!--        <li><a href="#/">成功案例</a></li>-->
+            <!--        <li><a href="#/">联系我们</a></li>-->
+        </ul>
+
+    </div>
+
+    <br><br/><br><br/>
+
+
+    <script src='jquery.min.js'></script>
+    <script src="script.js"></script>
+
+
+
+
+
+    <div id="canshu" style="width: 900px; " >
+        <!--      下边的action属性指定表单数据提交的目标地址，由后端的注解方法来处理-->
+        <form action="/submitForm" enctype='multipart/form-data' method='POST' >
+
+            <div class="col">
+
+                <h3><span class="red">Input File</span></h3>
+
+<!--                <br><br/>-->
+
+
+                <div>
+                    <b><label style="display: inline-block; width: 100px;">&ensp;&ensp;Antigen:</label></b>
+                    <input type="text" id="inputA" name="inputA" >
+                    <br><br/>
+                </div>
+
+                <div>
+                    <b><label style="display: inline-block; width: 100px;">&ensp;&ensp;HLA_sequence:</label></b>
+                    <input type="text" id="inputB" name="inputB">
+
+                </div>
+
+                <br><br/>
+
+
+                <b>
+                    <label>Microsoft Excel Format (.csv):</label>
+                </b>
+                <br><br/>
+
+                <input class="file" type="file" name="file" id="file" accept=".csv" >
+                <br><br/>
+                <button type="button" class="myButton" id="upload">Upload(csv)</button>
+
+                <div class="info1">
+                    <!--          示例文档链接-->
+                    <b>
+
+                        <!--            <a href="/static/examples/independent_set.csv">Example File</a>-->
+                        <a href="/static/examples">Example File（上传的示例文件）</a>
+                    </b>
+                    <br><br/>
+                </div>
+
+            </div>
+
+
+
+
+
+            <div class="col">
+
+                <h3><span class="red">Job Submission</span></h3>
+<!--                <br><br/>-->
+<!--                <br><br/>-->
+
+                <br><br/>
+                <b><label>&ensp;&ensp;Email:</label></b>
+                <!--          先不写required,先进行测试-->
+                <!--        <input type = "text"  id="Email_address" name="Email_address"  size="25" placeholder= 'Please enter your email address' required>-->
+                <input type = "text"  id="Email_address" name="Email_address"  size="25" placeholder= 'Please enter your email address' required >
+                <br><br/>
+
+
+                <label>&ensp;&ensp;
+                    <input type="checkbox" name="checkbox"> 是否需要热图
+                </label>
+
+
+            </div>
+
+
+            <div align="center" class="col1">
+<!--                <span><a href="#"></a></span>-->
+                <span id="submitFormButton" ><a href="#"></a></span>
+
+            </div>
+
+<!--            <div align="center" class="col1">-->
+<!--&lt;!&ndash;                <span><a href="#"></a></span>&ndash;&gt;-->
+<!--                <input class="file" type="submit" value=" Run（请耐心等待几分钟） ">-->
+<!--            </div>-->
+
+        </form>
+    </div>
+
+    <br><br/><br><br/>
+      <div id="footer" class = "beian">
+
+        <p align="center">Jiang Lab:Bioinformatic Team (<a href="http://www.jianglab.org.cn/">Jiang Lab</a>)
+          ----------------------------------------------------Contact: qhjiang@hit.edu.cn</p>
+        <p align="center"><a href="http://www.beian.miit.gov.cn/">赣ICP备20010039号</a></p>
+
+      </div>
+
+</div>
+
+<!--    </div>-->
+<!--</div>-->
+
+<!--<script src="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>-->
+
+<!--<canvas id="canvas"></canvas>-->
+<script src="index.js"></script>
+
+<script>
+
+</script>
+
+
+<script>
+    $("#upload").on("click", function () {
+        var fileObj = document.getElementById("file").files[0];//这边的file是输入框上传的文件数据
+        var form = new FormData();
+        form.append("file", fileObj);
+
+        // 使用Ajax发送文件到服务器
+        $.ajax({
+            type: "POST",
+            url: "/uploadHLA",  // 指定服务器端点（文件上传）
+            data: form,
+            processData: false,
+            contentType: false,
+            success: function (data) {
+                // 处理成功，可以显示消息或执行其他操作
+                alert(data);
+                window.location.href = window.location.href;
+            },
+            error: function () {
+                // 处理错误，如果有的话
+                alert("上传失败，请检查服务器日志获取详细信息。");
+            }
+        });
+    });
+</script>
+
+
+<script>
+
+
+    // 监听按钮点击事件
+    $("#submitFormButton").on("click", function () {
+
+        // 检查表单的有效性
+        var isFormValid = $("form")[0].checkValidity();
+        if (!isFormValid) {
+            // 如果表单验证不通过，则显示提示信息
+            alert("Please enter your email address.");
+            return;
+        }
+        // 如果表单验证通过，则提交表单
+        $("form").submit();
+    });
+
+
+    // 在表单提交成功后，显示邮件发送结果
+    $("form").submit(function (event) {
+        event.preventDefault(); // 阻止表单的默认提交行为
+        var formData = $(this).serialize(); // 将表单数据序列化为字符串
+
+        $.ajax({
+            type: "POST",
+            url: "/submitFormHLA", // 提交到后端处理邮件发送的接口
+            data: formData,
+            success: function (data) {
+                // 处理成功，显示邮件发送结果
+                alert(data);
+            },
+            error: function () {
+                // 处理错误
+                alert("邮件发送失败，请检查邮箱是否书写正确。");
+            }
+        });
+    });
+</script>
+
+
+</body>
+</html>
