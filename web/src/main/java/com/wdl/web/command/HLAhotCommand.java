@@ -24,15 +24,25 @@ public class HLAhotCommand {
 
     public void executeWindowsCommands() throws IOException, InterruptedException {
         // 完整的 Python 解释器路径
-        String pythonPath = "E:/anaconda/envs/pytorch/python.exe";
+        //String pythonPath = "E:/anaconda/envs/pytorch/python.exe";
 
         // 第一个脚本路径
-        String scriptPath1 = "H:/桌面/hla/性能测试_hla.py";
-        String command1 = pythonPath + " " + scriptPath1;
+        //本地测试
+        String scriptPath1 = "E:/anaconda/envs/pytorch/python.exe E:/FTP/web/data/性能测试_hla.py";
+
+        //服务器
+//        String scriptPath1 = "python E:/FTP/web/data/性能测试_hla.py";
+        String command1 =  scriptPath1;
 
         // 第二个脚本路径
-        String scriptPath2 = "H:/桌面/hla/热图_hla.py";
-        String command2 = pythonPath + " " + scriptPath2;
+        String scriptPath2 = "E:/anaconda/envs/pytorch/python.exe E:/FTP/web/data/热图_hla.py";
+//        String scriptPath2 = "python E:/FTP/web/data/热图_hla.py";
+        String command2 =scriptPath2;
+
+
+
+
+
 
         // 执行第一个命令
         Process process1 = Runtime.getRuntime().exec(command1);

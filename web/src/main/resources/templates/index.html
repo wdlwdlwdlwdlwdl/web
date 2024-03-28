@@ -4,18 +4,18 @@
     <meta charset="UTF-8">
     <title>Model Test</title>
 
-    <link rel="stylesheet" href="../menu.css" />
+    <link rel="stylesheet" href="menu.css" />
 
 
-    <link href="../newserver2.css" rel="stylesheet" type="text/css">
+    <link href="newserver2.css" rel="stylesheet" type="text/css">
     <!--    <link href="server.css" rel="stylesheet" type="text/css">-->
 
-    <link href="../newmain2.css" rel="stylesheet" type="text/css">
+    <link href="newmain2.css" rel="stylesheet" type="text/css">
     <!--  <link href="main.css" rel="stylesheet" type="text/css">-->
 
-    <link rel="stylesheet" href="../background.css">
+    <link rel="stylesheet" href="background.css">
     <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
-    <link rel="stylesheet" href="../menu.css">
+    <link rel="stylesheet" href="menu.css">
 
 
     <!--    为了让canvas元素与动态背景同时呈现-->
@@ -73,11 +73,9 @@
         <ul class="nav">
             <li class="slide1"></li>
             <li class="slide2"></li>
-            <li><a class="active" href="HLA.html">HLA</a></li>
-            <li><a href="../TCR/TCR.html">TCR</a></li>
-            <li><a href="../HLA-TCR/HLA-TCR.html">HLA-TCR</a></li>
-            <!--        <li><a href="#/">成功案例</a></li>-->
-            <!--        <li><a href="#/">联系我们</a></li>-->
+            <li><a class="active" href="index.html">HLA</a></li>
+            <li><a href="TCR/TCR.html">TCR</a></li>
+            <li><a href="HLA-TCR/HLA-TCR.html">HLA-TCR</a></li>
         </ul>
 
     </div>
@@ -85,8 +83,8 @@
     <br><br/><br><br/>
 
 
-    <script src='../jquery.min.js'></script>
-    <script src="../script.js"></script>
+    <script src='jquery.min.js'></script>
+    <script src="script.js"></script>
 
 
 
@@ -98,13 +96,27 @@
 
             <div class="col">
 
-                <h3><span class="red">Input File(文件上传)</span></h3>
-
-                <!--                <br><br/>-->
+                <h3><span class="red">Input File</span></h3>
 
 
 
-<!--手动输入的逻辑-->
+
+
+
+                <div class="select_box">
+                    <font>&#8250;</font>
+                    <span>请选择：</span>
+                    <ul>
+                        <li>文件上传</li>
+                        <li>手动输入</li>
+                    </ul>
+                </div>
+
+
+                <br><br/><br><br/><br><br/><br><br/>
+
+
+
 <!--                <div>-->
 <!--                    <b><label style="display: inline-block; width: 100px;">&ensp;&ensp;Antigen:</label></b>-->
 <!--                    <input type="text" id="inputA" name="inputA" >-->
@@ -113,25 +125,30 @@
 
 <!--                <div>-->
 <!--                    <b><label style="display: inline-block; width: 100px;">&ensp;&ensp;HLA_sequence:</label></b>-->
-<!--                    <input type="text" id="inputB" name="inputB" >-->
+<!--                    <input type="text" id="inputB" name="inputB">-->
+
 <!--                </div>-->
 
 <!--                <br><br/>-->
 
 
-                <b>
-                    <label>Microsoft Excel Format (.csv):</label>
-                </b>
-                <br><br/>
+<!--                <b>-->
+<!--                    <label>Microsoft Excel Format (.csv):</label>-->
+<!--                </b>-->
+<!--                <br><br/>-->
 
-                <input class="file" type="file" name="file" id="file" accept=".csv" required>
-                <br><br/>
+<!--                <input class="file" type="file" name="file" id="file" accept=".csv" >-->
+<!--                <br><br/>-->
 <!--                <button type="button" class="myButton" id="upload">Upload(csv)</button>-->
 
+
+
+
+
+                <!--          示例文档链接-->
                 <div class="info1">
                     <!--          示例文档链接-->
                     <b>
-
                         <!--            <a href="/static/examples/independent_set.csv">Example File</a>-->
                         <a href="/HLAexample">Example File（上传的示例文件）</a>
                     </b>
@@ -197,56 +214,48 @@
 <!--<script src="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>-->
 
 <!--<canvas id="canvas"></canvas>-->
-<script src="../index.js"></script>
+<script src="index.js"></script>
 
 
 
-<!--这是之前的文件上传逻辑，我将其添加到下面了-->
-<!--<script>-->
-<!--    $("#upload").on("click", function () {-->
-<!--        var fileObj = document.getElementById("file").files[0];//这边的file是输入框上传的文件数据-->
-<!--        var form = new FormData();-->
-<!--        form.append("file", fileObj);-->
 
-<!--        // 使用Ajax发送文件到服务器-->
-<!--        $.ajax({-->
-<!--            type: "POST",-->
-<!--            url: "/uploadHLA",  // 指定服务器端点（文件上传）-->
-<!--            data: form,-->
-<!--            processData: false,-->
-<!--            contentType: false,-->
-<!--            success: function (data) {-->
-<!--                // 处理成功，可以显示消息或执行其他操作-->
-<!--                alert(data);-->
-<!--                window.location.href = window.location.href;-->
-<!--            },-->
-<!--            error: function () {-->
-<!--                // 处理错误，如果有的话-->
-<!--                alert("上传失败，请检查服务器日志获取详细信息。");-->
-<!--            }-->
-<!--        });-->
-<!--    });-->
-<!--</script>-->
+
+<script>
+    $(function () {
+        var s_title = $(".select_box span");
+        var s_select = $(".select_box li");
+        s_title.click(function (e) {
+            $(this).addClass("span_aa");
+            $(this).next("ul").show();
+            e.stopPropagation();
+        });
+
+        s_select.click(function () {
+            var s_text = $(this).html();
+            var s_title_2 = $(this).parent('ul').prev("span");
+            s_title_2.html(s_text).removeClass("span_aa");
+            $(this).parent('ul').hide();
+
+            // 添加条件判断和跳转逻辑
+            if (s_text === "文件上传") {
+                window.location.href = "/HLA/HLAfile.html"; // 如果选择了文件上传，跳转到file.html页面
+            }
+            if (s_text === "手动输入") {
+                window.location.href = "/HLA/HLAtext.html"; // 如果选择了文件上传，跳转到file.html页面
+            }
+        });
+
+        $(document).click(function () {
+            s_title.removeClass("span_aa");
+            $(".select_box ul").hide();
+        });
+    });
+</script>
+
 
 
 <script>
-
-
-    // 监听按钮点击事件
-    $("#submitFormButton").on("click", function () {
-
-        // 检查表单的有效性
-        var isFormValid = $("form")[0].checkValidity();
-        if (!isFormValid) {
-            // 如果表单验证不通过，则显示提示信息
-            alert("Please fill in all the information completely.");
-            return;
-        }
-
-
-
-
-        //下面是文件上传逻辑
+    $("#upload").on("click", function () {
         var fileObj = document.getElementById("file").files[0];//这边的file是输入框上传的文件数据
         var form = new FormData();
         form.append("file", fileObj);
@@ -265,13 +274,26 @@
             },
             error: function () {
                 // 处理错误，如果有的话
-                alert("请上传文件.");
+                alert("上传失败，请检查服务器日志获取详细信息。");
             }
         });
+    });
+</script>
 
 
+<script>
 
 
+    // 监听按钮点击事件
+    $("#submitFormButton").on("click", function () {
+
+        // 检查表单的有效性
+        var isFormValid = $("form")[0].checkValidity();
+        if (!isFormValid) {
+            // 如果表单验证不通过，则显示提示信息
+            alert("Please enter your email address.");
+            return;
+        }
         // 如果表单验证通过，则提交表单
         $("form").submit();
     });
@@ -284,7 +306,7 @@
 
         $.ajax({
             type: "POST",
-            url: "/submitFormHLAfile", // 提交到后端处理邮件发送的接口
+            url: "/submitFormHLA", // 提交到后端处理邮件发送的接口
             data: formData,
             success: function (data) {
                 // 处理成功，显示邮件发送结果

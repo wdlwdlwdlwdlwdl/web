@@ -15,6 +15,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.view.RedirectView;
 
 import javax.annotation.PostConstruct;
 import java.io.*;
@@ -64,11 +65,16 @@ public class FileControllerTest {
 //        FileUtil.createDirectories(fileUploadRootDir);
 //    }
 
+//    @RequestMapping("/")
+//    public String files(Model model) {
+//        Collection<FileInfo> files = fileRepository.values();
+//        model.addAttribute("data", files);
+//        return "files.html";
+//    }
+
     @RequestMapping("/")
-    public String files(Model model) {
-        Collection<FileInfo> files = fileRepository.values();
-        model.addAttribute("data", files);
-        return "files.html";
+    public RedirectView redirectToIndex() {
+        return new RedirectView("/index.html");
     }
 
 

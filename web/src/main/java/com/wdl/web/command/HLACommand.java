@@ -23,20 +23,16 @@ public class HLACommand {
     }
 
     public void executeWindowsCommands() throws IOException, InterruptedException {
-        // 完整的 Python 解释器路径
-        String pythonPath = "E:/anaconda/envs/pytorch/python.exe";
 
-        //  E:/anaconda/envs/pytorch/python.exe D:/web/web/性能测试.py
+        //本地测试
+        String command ="E:/anaconda/envs/pytorch/python.exe E:/FTP/web/data/性能测试_hla.py";
 
-        // 脚本路径
-        String scriptPath = "H:/桌面/hla/性能测试_hla.py";
-//        String scriptPath = "D:/web/web/性能测试.py";
-        //H:/桌面/hla/性能测试_hla.py
+        //服务器
+//        String command ="python E:/FTP/web/data/性能测试_hla.py";
 
-        // 构建命令
-        String command = pythonPath + " " + scriptPath;
 
-        //下面两行代码是最后打包时要写的，如果报错，将下面注释的代码解除注释，并将这两行代码注释掉
+
+
         Process process = Runtime.getRuntime().exec(command);
         process.waitFor();
 

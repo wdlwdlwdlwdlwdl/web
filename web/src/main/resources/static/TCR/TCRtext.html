@@ -105,13 +105,13 @@
 
         <div>
           <b><label style="display: inline-block; width: 100px;">&ensp;&ensp;CDR3:</label></b>
-          <input type="text" id="inputA" name="inputA" >
+          <input type="text" id="inputA" name="inputA" required>
           <br><br/>
         </div>
 
         <div>
           <b><label style="display: inline-block; width: 100px;">&ensp;&ensp;Antigen:</label></b>
-          <input type="text" id="inputB" name="inputB">
+          <input type="text" id="inputB" name="inputB" required>
           <!--                    <input type="text" id="inputB" name="inputB" placeholder= '请输入:HLA/TCR/HLA-TCR' >-->
         </div>
 
@@ -240,7 +240,7 @@
     var isFormValid = $("form")[0].checkValidity();
     if (!isFormValid) {
       // 如果表单验证不通过，则显示提示信息
-      alert("Please enter your email address.");
+      alert("Please fill in all the information completely.");
       return;
     }
     // 如果表单验证通过，则提交表单

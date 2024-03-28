@@ -124,9 +124,9 @@
                 </b>
                 <br><br/>
 
-                <input class="file" type="file" name="file" id="file" accept=".csv" >
+                <input class="file" type="file" name="file" id="file" accept=".csv" required>
                 <br><br/>
-                <button type="button" class="myButton" id="upload">Upload(csv)</button>
+<!--                <button type="button" class="myButton" id="upload">Upload(csv)</button>-->
 
                 <div class="info1">
                     <!--          示例文档链接-->
@@ -199,13 +199,55 @@
 <!--<canvas id="canvas"></canvas>-->
 <script src="../index.js"></script>
 
+
+
+
+<!--这是之前的文件上传逻辑-->
+<!--<script>-->
+<!--    $("#upload").on("click", function () {-->
+<!--        var fileObj = document.getElementById("file").files[0];//这边的file是输入框上传的文件数据-->
+<!--        var form = new FormData();-->
+<!--        form.append("file", fileObj);-->
+
+<!--        // 使用Ajax发送文件到服务器-->
+<!--        $.ajax({-->
+<!--            type: "POST",-->
+<!--            url: "/uploadTCR",  // 指定服务器端点（文件上传）-->
+<!--            data: form,-->
+<!--            processData: false,-->
+<!--            contentType: false,-->
+<!--            success: function (data) {-->
+<!--                // 处理成功，可以显示消息或执行其他操作-->
+<!--                alert(data);-->
+<!--                window.location.href = window.location.href;-->
+<!--            },-->
+<!--            error: function () {-->
+<!--                // 处理错误，如果有的话-->
+<!--                alert("上传失败，请检查服务器日志获取详细信息。");-->
+<!--            }-->
+<!--        });-->
+<!--    });-->
+<!--</script>-->
+
+
 <script>
 
-</script>
+
+    // 监听按钮点击事件
+    $("#submitFormButton").on("click", function () {
+
+        // 检查表单的有效性
+        var isFormValid = $("form")[0].checkValidity();
+        if (!isFormValid) {
+            // 如果表单验证不通过，则显示提示信息
+            alert("Please fill in all the information completely.");
+            return;
+        }
 
 
-<script>
-    $("#upload").on("click", function () {
+
+
+        //文件上传逻辑
         var fileObj = document.getElementById("file").files[0];//这边的file是输入框上传的文件数据
         var form = new FormData();
         form.append("file", fileObj);
@@ -224,26 +266,14 @@
             },
             error: function () {
                 // 处理错误，如果有的话
-                alert("上传失败，请检查服务器日志获取详细信息。");
+                alert("请上传文件.");
             }
         });
-    });
-</script>
 
 
-<script>
 
 
-    // 监听按钮点击事件
-    $("#submitFormButton").on("click", function () {
 
-        // 检查表单的有效性
-        var isFormValid = $("form")[0].checkValidity();
-        if (!isFormValid) {
-            // 如果表单验证不通过，则显示提示信息
-            alert("Please enter your email address.");
-            return;
-        }
         // 如果表单验证通过，则提交表单
         $("form").submit();
     });
